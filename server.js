@@ -65,8 +65,8 @@ app.post('/contact', (req, res)=>{
     res.redirect('http://nazmussaqib.in/');
 })
 
+const PORT = process.env.PORT || 5000;
 
-
-app.listen(5000, ()=>{
+app.listen(PORT, ()=>{
     console.log("listening from server");
 })
