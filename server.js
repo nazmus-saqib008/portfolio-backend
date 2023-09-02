@@ -5,12 +5,10 @@ const app= express();
 const cors= require('cors');
 const mongoose = require('mongoose');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-
-
-const uri = "mongodb+srv://nazmussaqib:nazmussaqib@myportfoliocontactus.tkbdv8l.mongodb.net/?retryWrites=true&w=majority";
+require('dotenv').config();
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
+const client = new MongoClient(process.env.URI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -21,7 +19,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    await client.db("portfolio").command({ ping: 1 });
+    await client.db(process.env.DB_NAME).command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
   } catch (err) {
@@ -32,8 +30,8 @@ run().catch(console.dir);
 
 async function insertData(data) {
     try {
-        const db = client.db("portfolio");
-        const collection = db.collection("contactMe");
+        const db = client.db(process.env.DB_NAME);
+        const collection = db.collection(process.env.COLLECTION_NAME);
         let data_formatted={
             "name": data.name,
             "phone": data.phone,
